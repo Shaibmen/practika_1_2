@@ -7,18 +7,18 @@
       <Schema Namespace="Хранилище ChurchModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Church">
           <Key>
-            <PropertyRef Name="ChurchID" />
+            <PropertyRef Name="churchID" />
           </Key>
-          <Property Name="ChurchID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Address" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="churchID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="address" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="established_date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="ChurchService">
           <Key>
-            <PropertyRef Name="ChurchServiceID" />
+            <PropertyRef Name="churchServiceID" />
           </Key>
-          <Property Name="ChurchServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="churchServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="service_date" Type="datetime" Nullable="false" />
           <Property Name="priest_id" Type="int" />
           <Property Name="church_id" Type="int" />
@@ -32,9 +32,20 @@
           <Property Name="last_name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="middle_name" Type="varchar" MaxLength="50" />
           <Property Name="ierarch_position" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="church_id" Type="int" />
         </EntityType>
-        <Association Name="FK__ChurchSer__pries__3C69FB99">
+        <Association Name="FK__ChurchSer__churc__3C69FB99">
+          <End Role="Church" Type="Self.Church" Multiplicity="0..1" />
+          <End Role="ChurchService" Type="Self.ChurchService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Church">
+              <PropertyRef Name="churchID" />
+            </Principal>
+            <Dependent Role="ChurchService">
+              <PropertyRef Name="church_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ChurchSer__pries__3B75D760">
           <End Role="Priest" Type="Self.Priest" Multiplicity="0..1" />
           <End Role="ChurchService" Type="Self.ChurchService" Multiplicity="*" />
           <ReferentialConstraint>
@@ -46,29 +57,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Priest__church_i__398D8EEE">
-          <End Role="Church" Type="Self.Church" Multiplicity="0..1" />
-          <End Role="Priest" Type="Self.Priest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Church">
-              <PropertyRef Name="ChurchID" />
-            </Principal>
-            <Dependent Role="Priest">
-              <PropertyRef Name="church_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="Хранилище ChurchModelContainer">
           <EntitySet Name="Church" EntityType="Self.Church" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChurchService" EntityType="Self.ChurchService" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Priest" EntityType="Self.Priest" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__ChurchSer__pries__3C69FB99" Association="Self.FK__ChurchSer__pries__3C69FB99">
-            <End Role="Priest" EntitySet="Priest" />
+          <AssociationSet Name="FK__ChurchSer__churc__3C69FB99" Association="Self.FK__ChurchSer__churc__3C69FB99">
+            <End Role="Church" EntitySet="Church" />
             <End Role="ChurchService" EntitySet="ChurchService" />
           </AssociationSet>
-          <AssociationSet Name="FK__Priest__church_i__398D8EEE" Association="Self.FK__Priest__church_i__398D8EEE">
-            <End Role="Church" EntitySet="Church" />
+          <AssociationSet Name="FK__ChurchSer__pries__3B75D760" Association="Self.FK__ChurchSer__pries__3B75D760">
             <End Role="Priest" EntitySet="Priest" />
+            <End Role="ChurchService" EntitySet="ChurchService" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -78,23 +77,24 @@
       <Schema Namespace="ChurchModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Church">
           <Key>
-            <PropertyRef Name="ChurchID" />
+            <PropertyRef Name="churchID" />
           </Key>
-          <Property Name="ChurchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="churchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="established_date" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Priest" Relationship="Self.FK__Priest__church_i__398D8EEE" FromRole="Church" ToRole="Priest" />
+          <NavigationProperty Name="ChurchService" Relationship="Self.FK__ChurchSer__churc__3C69FB99" FromRole="Church" ToRole="ChurchService" />
         </EntityType>
         <EntityType Name="ChurchService">
           <Key>
-            <PropertyRef Name="ChurchServiceID" />
+            <PropertyRef Name="churchServiceID" />
           </Key>
-          <Property Name="ChurchServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="churchServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="service_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="priest_id" Type="Int32" />
           <Property Name="church_id" Type="Int32" />
-          <NavigationProperty Name="Priest" Relationship="Self.FK__ChurchSer__pries__3C69FB99" FromRole="ChurchService" ToRole="Priest" />
+          <NavigationProperty Name="Church" Relationship="Self.FK__ChurchSer__churc__3C69FB99" FromRole="ChurchService" ToRole="Church" />
+          <NavigationProperty Name="Priest" Relationship="Self.FK__ChurchSer__pries__3B75D760" FromRole="ChurchService" ToRole="Priest" />
         </EntityType>
         <EntityType Name="Priest">
           <Key>
@@ -105,23 +105,21 @@
           <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="middle_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ierarch_position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="church_id" Type="Int32" />
-          <NavigationProperty Name="Church" Relationship="Self.FK__Priest__church_i__398D8EEE" FromRole="Priest" ToRole="Church" />
-          <NavigationProperty Name="ChurchService" Relationship="Self.FK__ChurchSer__pries__3C69FB99" FromRole="Priest" ToRole="ChurchService" />
+          <NavigationProperty Name="ChurchService" Relationship="Self.FK__ChurchSer__pries__3B75D760" FromRole="Priest" ToRole="ChurchService" />
         </EntityType>
-        <Association Name="FK__Priest__church_i__398D8EEE">
+        <Association Name="FK__ChurchSer__churc__3C69FB99">
           <End Role="Church" Type="Self.Church" Multiplicity="0..1" />
-          <End Role="Priest" Type="Self.Priest" Multiplicity="*" />
+          <End Role="ChurchService" Type="Self.ChurchService" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Church">
-              <PropertyRef Name="ChurchID" />
+              <PropertyRef Name="churchID" />
             </Principal>
-            <Dependent Role="Priest">
+            <Dependent Role="ChurchService">
               <PropertyRef Name="church_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ChurchSer__pries__3C69FB99">
+        <Association Name="FK__ChurchSer__pries__3B75D760">
           <End Role="Priest" Type="Self.Priest" Multiplicity="0..1" />
           <End Role="ChurchService" Type="Self.ChurchService" Multiplicity="*" />
           <ReferentialConstraint>
@@ -133,15 +131,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ChurchEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ChurchEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Church" EntityType="Self.Church" />
           <EntitySet Name="ChurchService" EntityType="Self.ChurchService" />
           <EntitySet Name="Priest" EntityType="Self.Priest" />
-          <AssociationSet Name="FK__Priest__church_i__398D8EEE" Association="Self.FK__Priest__church_i__398D8EEE">
+          <AssociationSet Name="FK__ChurchSer__churc__3C69FB99" Association="Self.FK__ChurchSer__churc__3C69FB99">
             <End Role="Church" EntitySet="Church" />
-            <End Role="Priest" EntitySet="Priest" />
+            <End Role="ChurchService" EntitySet="ChurchService" />
           </AssociationSet>
-          <AssociationSet Name="FK__ChurchSer__pries__3C69FB99" Association="Self.FK__ChurchSer__pries__3C69FB99">
+          <AssociationSet Name="FK__ChurchSer__pries__3B75D760" Association="Self.FK__ChurchSer__pries__3B75D760">
             <End Role="Priest" EntitySet="Priest" />
             <End Role="ChurchService" EntitySet="ChurchService" />
           </AssociationSet>
@@ -151,13 +149,13 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище ChurchModelContainer" CdmEntityContainer="ChurchEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ChurchModelContainer" CdmEntityContainer="ChurchEntities1">
           <EntitySetMapping Name="Church">
             <EntityTypeMapping TypeName="ChurchModel.Church">
               <MappingFragment StoreEntitySet="Church">
-                <ScalarProperty Name="ChurchID" ColumnName="ChurchID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="churchID" ColumnName="churchID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="established_date" ColumnName="established_date" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -165,7 +163,7 @@
           <EntitySetMapping Name="ChurchService">
             <EntityTypeMapping TypeName="ChurchModel.ChurchService">
               <MappingFragment StoreEntitySet="ChurchService">
-                <ScalarProperty Name="ChurchServiceID" ColumnName="ChurchServiceID" />
+                <ScalarProperty Name="churchServiceID" ColumnName="churchServiceID" />
                 <ScalarProperty Name="service_date" ColumnName="service_date" />
                 <ScalarProperty Name="priest_id" ColumnName="priest_id" />
                 <ScalarProperty Name="church_id" ColumnName="church_id" />
@@ -180,7 +178,6 @@
                 <ScalarProperty Name="last_name" ColumnName="last_name" />
                 <ScalarProperty Name="middle_name" ColumnName="middle_name" />
                 <ScalarProperty Name="ierarch_position" ColumnName="ierarch_position" />
-                <ScalarProperty Name="church_id" ColumnName="church_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

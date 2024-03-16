@@ -14,11 +14,12 @@ namespace practika_1_2
     
     public partial class ChurchService
     {
-        public int ChurchServiceID { get; set; }
+        public int churchServiceID { get; set; }
         public System.DateTime service_date { get; set; }
         public Nullable<int> priest_id { get; set; }
         public Nullable<int> church_id { get; set; }
     
+        public virtual Church Church {private get; set; }
         public virtual Priest Priest {private get; set; }
     }
 }

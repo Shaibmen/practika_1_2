@@ -20,7 +20,7 @@ namespace practika_1_2
     /// </summary>
     public partial class Page2 : Page
     {
-        private ChurchEntities basadan = new ChurchEntities();
+        private ChurchEntities1 basadan = new ChurchEntities1();
         public Page2()
         {
             InitializeComponent();

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="Хранилище ChurchModelContainer" CdmEntityContainer="ChurchEntities">
+  <EntityContainerMapping StorageEntityContainer="Хранилище ChurchModelContainer" CdmEntityContainer="ChurchEntities1">
     <EntitySetMapping Name="Church">
       <EntityTypeMapping TypeName="ChurchModel.Church">
         <MappingFragment StoreEntitySet="Church">
-          <ScalarProperty Name="ChurchID" ColumnName="ChurchID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="churchID" ColumnName="churchID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="address" ColumnName="address" />
           <ScalarProperty Name="established_date" ColumnName="established_date" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -14,7 +14,7 @@
     <EntitySetMapping Name="ChurchService">
       <EntityTypeMapping TypeName="ChurchModel.ChurchService">
         <MappingFragment StoreEntitySet="ChurchService">
-          <ScalarProperty Name="ChurchServiceID" ColumnName="ChurchServiceID" />
+          <ScalarProperty Name="churchServiceID" ColumnName="churchServiceID" />
           <ScalarProperty Name="service_date" ColumnName="service_date" />
           <ScalarProperty Name="priest_id" ColumnName="priest_id" />
           <ScalarProperty Name="church_id" ColumnName="church_id" />
@@ -29,7 +29,6 @@
           <ScalarProperty Name="last_name" ColumnName="last_name" />
           <ScalarProperty Name="middle_name" ColumnName="middle_name" />
           <ScalarProperty Name="ierarch_position" ColumnName="ierarch_position" />
-          <ScalarProperty Name="church_id" ColumnName="church_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

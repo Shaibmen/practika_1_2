@@ -13,10 +13,10 @@ namespace practika_1_2
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ChurchEntities : DbContext
+    public partial class ChurchEntities1 : DbContext
     {
-        public ChurchEntities()
-            : base("name=ChurchEntities")
+        public ChurchEntities1()
+            : base("name=ChurchEntities1")
         {
         }
     

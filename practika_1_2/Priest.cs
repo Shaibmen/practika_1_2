@@ -20,14 +20,12 @@ namespace practika_1_2
             this.ChurchService = new HashSet<ChurchService>();
         }
     
-        public int PriestID {get; set; }
+        public int PriestID { get; set; }
         public string first_name { get; set; }
         public string last_name { get; set; }
         public string middle_name { get; set; }
         public string ierarch_position { get; set; }
-        public Nullable<int> church_id { get; set; }
     
-        public virtual Church Church { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChurchService> ChurchService { get; set; }
     }
